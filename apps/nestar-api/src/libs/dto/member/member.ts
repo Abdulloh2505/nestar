@@ -34,7 +34,7 @@ import { MemberAuthType, MemberStatus, MemberType } from "../../enums/member.enu
      @Field(() => String, {nullable: true})
      memberFullName?: string;
 
-     @Field(() => String)
+     @Field(() => String) 
      memberImage?: string;
 
    @Field(() => String, {nullable: true})
