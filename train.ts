@@ -13,3 +13,17 @@
 
 printNumbers();
 //natija ishlayaptigit 
+//TASK-ZM
+function reverseInteger(num: number): number {
+  let result = 0;
+
+  while (num > 0) {
+    result = result * 10 + (num % 10);
+    num = Math.floor(num / 10);
+  }
+
+  return result;
+}
+
+// test
+reverseInteger(123456789); // 987654321
