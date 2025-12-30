@@ -14,7 +14,7 @@ import { MemberAuthType, MemberStatus, MemberType } from "../../enums/member.enu
       @Field(() => MemberType)
        memberType: MemberType;
 
-     @Field(() => MemberStatus)
+     @Field(() => MemberStatus, {nullable: true})
       memberStatus: MemberStatus;
 
      @Field(() => MemberAuthType)

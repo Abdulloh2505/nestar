@@ -1,17 +1,17 @@
- function printNumbers(): void {
-  let count = 1;
+//  function printNumbers(): void {
+//   let count = 1;
 
-  const interval = setInterval(() => {
-    console.log(count);
-    count++;
+//   const interval = setInterval(() => {
+//     console.log(count);
+//     count++;
 
-    if (count > 5) {
-      clearInterval(interval);
-    }
-  }, 1000);
-}
+//     if (count > 5) {
+//       clearInterval(interval);
+//     }
+//   }, 1000);
+// }
 
-printNumbers();
+// printNumbers();
 //natija ishlayaptigit 
 //TASK-ZM
 function reverseInteger(num: number): number {
@@ -26,4 +26,4 @@ function reverseInteger(num: number): number {
 }
 
 // test
-reverseInteger(123456789); // 987654321
+console.log(reverseInteger(123456789));
