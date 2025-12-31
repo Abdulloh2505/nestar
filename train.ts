@@ -27,3 +27,14 @@ function reverseInteger(num: number): number {
 
 // test
 console.log(reverseInteger(123456789));
+//TASK-ZL
+function stringToKebab(str: string): string {
+  return str
+    .trim()                 
+    .toLowerCase()        
+    .replace(/\s+/g, "-");
+}
+
+
+console.log(stringToKebab("I love Kebab")); 
+// natija: "i-love-kebab"
