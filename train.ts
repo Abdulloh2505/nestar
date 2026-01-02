@@ -38,3 +38,17 @@ function stringToKebab(str: string): string {
 
 console.log(stringToKebab("I love Kebab")); 
 // natija: "i-love-kebab"
+
+
+
+////TASK-ZN
+function rotateArray(arr: number[], index: number): number[] {
+  const firstPart = arr.slice(0, index);
+  const secondPart = arr.slice(index);
+
+  return secondPart.concat(firstPart);
+}
+
+// natija
+console.log(rotateArray([1, 2, 3, 4, 5, 6], 3));
+// [5, 6, 1, 2, 3, 4]
