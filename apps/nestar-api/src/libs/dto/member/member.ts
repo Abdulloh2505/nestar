@@ -97,4 +97,6 @@ import { MemberAuthType, MemberStatus, MemberType } from "../../enums/member.enu
     @Field(() => Date )
    updatedAt: Date; 
 
+   @Field(() => String, {nullable: true})
+   accessToken?: string;
  }
