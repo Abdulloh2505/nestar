@@ -12,3 +12,4 @@ import { AuthModule } from '../auth/auth.module';
   providers: [MemberResolver, MemberService]
 })
 export class MemberModule {}
+ 
