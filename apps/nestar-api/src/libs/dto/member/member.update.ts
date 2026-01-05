@@ -55,7 +55,7 @@
 
       @IsOptional()
     @Field(() => String, {nullable: true})
-    memberDesk?: string; 
+    memberDesc?: string; 
 
     deleteAt?: Date;
 
