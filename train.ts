@@ -52,3 +52,17 @@ function rotateArray(arr: number[], index: number): number[] {
 // natija
 console.log(rotateArray([1, 2, 3, 4, 5, 6], 3));
 // [5, 6, 1, 2, 3, 4]
+
+
+
+//// TASK-
+function areArraysEqual(a: number[], b: number[]): boolean {
+  for (let i = 0; i < a.length; i++) {
+    if (b.indexOf(a[i]) === -1) return false;
+  }
+  return true;
+}
+console.log(areArraysEqual([1, 2, 3], [3, 1, 2]));    // true
+console.log(areArraysEqual([1, 2, 3], [3, 1, 2, 1])); // true
+console.log(areArraysEqual([1, 2, 3], [4, 1, 2]));    // false
+
