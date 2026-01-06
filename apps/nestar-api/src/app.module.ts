@@ -14,7 +14,7 @@ import { T } from './libs/types/common';
      ConfigModule.forRoot(), 
      GraphQLModule.forRoot({
       driver: ApolloDriver,
-      playgrount: true,
+      playground: true,
       uploads: false,
       autoSchemaFile: true,
       formatError: (error: T) => {
