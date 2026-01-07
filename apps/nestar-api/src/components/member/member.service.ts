@@ -20,6 +20,9 @@ export class MemberService {
            private viewService: ViewService,
     ) { }
 
+    
+
+
     public async signup(input: MemberInput): Promise<Member> {
         //TODO Hash password
         input.memberPassword = await this.authService.hashPassword(input.memberPassword);
