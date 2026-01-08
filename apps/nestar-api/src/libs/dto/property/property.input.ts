@@ -67,9 +67,9 @@ propertyRent?: boolean;
 
 memberId?: ObjectId;
 
-@IsNotEmpty()
+@IsOptional()
 @Field(() => Date, { nullable: true })
-constructorAt?: Date;
+constructedAt?: Date;
 
  }
 
