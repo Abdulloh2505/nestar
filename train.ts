@@ -66,3 +66,25 @@ console.log(areArraysEqual([1, 2, 3], [3, 1, 2]));    // true
 console.log(areArraysEqual([1, 2, 3], [3, 1, 2, 1])); // true
 console.log(areArraysEqual([1, 2, 3], [4, 1, 2]));    // false
 
+///task-ZP
+function groupAnagrams(strs: string[]): string[][] {
+  const map = new Map<string, string[]>();
+
+  for (const word of strs) {
+   
+    const key = word.split('').sort().join('');
+
+    if (!map.has(key)) {
+      map.set(key, []);
+    }
+
+    map.get(key)!.push(word);
+  }
+
+  return Array.from(map.values());
+}
+const strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
+
+const result = groupAnagrams(strs);
+
+console.log(result);
