@@ -1,7 +1,7 @@
  import { Schema } from 'mongoose';
 import { MemberAuthType, MemberStatus, MemberType } from '../libs/enums/member.enum';
 
-
+// VALIDATION OBJECT  \/
  const MemberSchema = new Schema({
     memberType: {
      type: String,

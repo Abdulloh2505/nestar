@@ -56,8 +56,7 @@ propertyImages: string[];
 @Length(5, 500)
 @Field(() => String, { nullable: true })
 propertyDesc?: string;
-
-@IsOptional()
+ @IsOptional()
 @Field(() => Boolean, { nullable: true })
 propertyBarter?: boolean;
 

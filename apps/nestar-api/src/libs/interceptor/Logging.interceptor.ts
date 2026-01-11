@@ -3,8 +3,13 @@ import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+// class+ class = extends
+// class + interface = implemends
+// interface + interface = extends
+
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
+   // Implemends 
     private readonly logger: Logger = new Logger();
 
      public intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
@@ -32,7 +37,7 @@ export class LoggingInterceptor implements NestInterceptor {
      }
   }
 
-  private stringify(context: ExecutionContext): string{
+  private stringify(context: ExecutionContext): string{  
 
      return JSON.stringify(context).slice(0, 75);
   }

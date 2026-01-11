@@ -9,13 +9,15 @@ import { ComponentsModule } from './components/components.module';
 import { DatabaseModule } from './database/database.module';
 import { T } from './libs/types/common';
 
+// APP Module bu markaziy modul hisoblanadi
+//Module decorti ekan
 @Module({
   imports: [
-     ConfigModule.forRoot(), 
+     ConfigModule.forRoot(), // XAvsizligini taminlash maqsadida .env bilan ishlatish
      GraphQLModule.forRoot({
-      driver: ApolloDriver,
-      playground: true,
-      uploads: false,
+      driver: ApolloDriver,//Apollo Server dan foydalanishni bildiradi
+      playground: true,//Bu - query va mutation larni test qilish uchun interaktiv interfeys
+      uploads: false,//Fayl yuklash funksiyasini o'chiradi
       autoSchemaFile: true,
       formatError: (error: T) => {
         const graphQLFormattedError = {
@@ -26,11 +28,11 @@ import { T } from './libs/types/common';
         console.log("GRAPHQL GLOBAL ERR:", graphQLFormattedError);
         return graphQLFormattedError
       }
-     }), 
-     ComponentsModule,
-      DatabaseModule,
+     }), // erorlarni bunday qilishimizda sabab biz tushunarli qilish frontedchigayam errorlarni
+     ComponentsModule, //Bu yerda biz modularni bir joyga joylayapmiz MODULARNI YEG"IB BERADIGAN JOY
+      DatabaseModule,// TCP conection 
   ],
-  controllers: [AppController],
+  controllers: [AppController],  // Bu yerda faqat ishlab turibdi degan mantiqni beradi
   providers: [AppService, AppResolver],
 })
 export class AppModule {}

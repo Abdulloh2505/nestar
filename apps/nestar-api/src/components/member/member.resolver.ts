@@ -29,7 +29,7 @@ export class MemberResolver {
     }
 
 
-
+//Interseptorni [req]
     @Mutation(() => Member)
     public async login(@Args("input") input: LoginInput): Promise<Member> {
         console.log("Mutation: login");
@@ -37,6 +37,7 @@ export class MemberResolver {
 
     }
 
+//Interseptorni [ress]
     @UseGuards(AuthGuard)
     @Query(() => String)
     public async checkAuth(@AuthMember('memberNick') memberNick: string): Promise<string> {
