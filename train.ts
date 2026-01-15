@@ -89,25 +89,28 @@
 
 // console.log(result);
 
-function findDuplicates(arr: number[]): number[] {
-  const counts: { [key: number]: number } = {};
-  const duplicates: number[] = [];
+// function findDuplicates(arr: number[]): number[] {
+//   const counts: { [key: number]: number } = {};
+//   const duplicates: number[] = [];
 
-  for (const num of arr) {
-    counts[num] = (counts[num] || 0) + 1;
-  }
+//   for (const num of arr) {
+//     counts[num] = (counts[num] || 0) + 1;
+//   }
 
-  for (const num in counts) {
-    if (counts[num] >= 2) {
-      duplicates.push(Number(num));
-    }
-  }
+//   for (const num in counts) {
+//     if (counts[num] >= 2) {
+//       duplicates.push(Number(num));
+//     }
+//   }
 
-  return duplicates;
-}
+//   return duplicates;
+// }
 
-// natija
-console.log(findDuplicates([1, 2, 3, 4, 5, 4, 3, 4])); // [3, 4]
-console.log(findDuplicates([1, 1, 1, 2, 2, 3])); // [1, 2]
-console.log(findDuplicates([1, 2, 3, 4, 5])); // []
-console.log(findDuplicates([5, 5, 5, 5])); // [5]
+// // natija
+// console.log(findDuplicates([1, 2, 3, 4, 5, 4, 3, 4])); // [3, 4]
+// console.log(findDuplicates([1, 1, 1, 2, 2, 3])); // [1, 2]
+// console.log(findDuplicates([1, 2, 3, 4, 5])); // []
+// console.log(findDuplicates([5, 5, 5, 5])); // [5]
+// //
+
+
