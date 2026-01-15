@@ -114,3 +114,25 @@
 // //
 
 
+//TASK-ZR
+function countNumberAndLetters(str: string): { number: number; letter: number } {
+  let numberCount = 0;
+  let letterCount = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+    
+    if (char >= '0' && char <= '9') {
+      numberCount++;
+    }
+    else if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
+      letterCount++;
+    }
+  }
+
+  return { number: numberCount, letter: letterCount };
+}
+
+console.log(countNumberAndLetters("string152%¥"));
+console.log(countNumberAndLetters("Hello123World456!"));
+console.log(countNumberAndLetters("Test2024@#$"));
