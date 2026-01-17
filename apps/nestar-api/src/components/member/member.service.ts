@@ -28,7 +28,7 @@ export class MemberService {
         input.memberPassword = await this.authService.hashPassword(input.memberPassword);
 
         try {
-            const result = await this.memberModel.create(input);
+            const result = await this.memberModel.create(input);//skima
             // TODO Authentication via TOKEN
             result.accessToken = await this.authService.createToken(result);
             return result;

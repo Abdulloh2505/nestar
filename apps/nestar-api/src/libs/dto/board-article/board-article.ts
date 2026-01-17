@@ -2,7 +2,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BoardArticleCategory, BoardArticleStatus } from '../../enums/board-article.enum';
 import { ObjectId } from 'mongoose';
 import { Member, TotalCounter } from '../member/member';
-
+// BULAR BIZGA QIYMAT QAYTARADI
 @ObjectType()
 export class BoardArticle {
 	@Field(() => String)

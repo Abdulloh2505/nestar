@@ -15,18 +15,18 @@ import { MemberType } from '../../libs/enums/member.enum';
 
 @Resolver()
 export class CommentResolver {
-  constructor(private readonly commentService: CommentService) {}
+  constructor(private readonly commentService: CommentService) {}//object qiliib olyapmiz
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)//hama fodalana oladi
   @Mutation(() => Comment)
   public async createComment(
-    @Args('input') input: CommentInput,
+    @Args('input') input: CommentInput,// 2ta parametri bor
     @AuthMember('_id') memberId: ObjectId,
   ): Promise<Comment> {
     console.log('Mutation: createComment');
     return await this.commentService.createComment(memberId, input);
   }
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard)//hamma ishlatsa buladi
 @Mutation(() => Comment)
 public async updateComment(
   @Args('input') input: CommentUpdate,
@@ -36,7 +36,7 @@ public async updateComment(
   input._id = shapeIntoMongoObjectId(input._id);
   return await this.commentService.updateComment(memberId, input);
 }
-@UseGuards(WithoutGuard)
+@UseGuards(WithoutGuard)//memberlarimiz 
 @Query(() => Comments)
 public async getComments(
   @Args('input') input: CommentsInquiry,
@@ -44,7 +44,7 @@ public async getComments(
 ): Promise<Comments> {
   console.log('Query: getComments');
   input.search.commentRefId = shapeIntoMongoObjectId(input.search.commentRefId);
-  return  await this.commentService.getComments(memberId, input);
+  return  await this.commentService.getComments(memberId, input);//2 ta argumentin path 
   
 }
 

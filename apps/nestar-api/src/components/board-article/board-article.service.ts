@@ -15,19 +15,23 @@ import { lookupMember, shapeIntoMongoObjectId } from '../../libs/config';
 @Injectable()
 export class BoardArticleService {
     constructor(
-        @InjectModel('BoardArticle') private readonly boardArticleModel: Model<BoardArticle>,
+        @InjectModel('BoardArticle') private readonly boardArticleModel: Model<BoardArticle>,//BORT ARTICLENI QAYTARADI
         private readonly memberService: MemberService,
         private readonly viewService: ViewService,
     ) { }
 
     public async createBoardArticle(memberId: ObjectId, input: BoardArticleInput): Promise<BoardArticle> {
-        input.memberId = memberId;
+        //createBoardArticle 2 TA PARAMETIRI BOR MEBER ID. HAMDA INPUT
+        input.memberId = memberId;// INPUT NI MEBER ID SINI MEMBER ID GA TENGLASHTIRYAPMIZ,
+        //TRY CATCH DA FOYDALANISHDAN MAQSAD DATABESE WALIDATIONGA BOG'LIQ HATOLIK BULSAS UZIMIZNI HATOLIGIMIZNI KURSATADI
         try {
             const result = await this.boardArticleModel.create(input);
+            //BORDT ARTIKLE SKIMA MODULIMIZNI  create METHITIDAN foydalanib
             await this.memberService.memberStatsEditor({
+                //object
                 _id: memberId,
                 targetKey: 'memberArticles',
-                modifier: 1,
+                modifier: 1,//statistikani birga oshirdik
             });
 
             return result;
@@ -38,16 +42,19 @@ export class BoardArticleService {
     }
 
 
-    public async getBoardArticle(memberId: ObjectId, articleId: ObjectId): Promise<BoardArticle> {
-        const search: T = {
+    public async getBoardArticle(memberId: ObjectId, articleId: ObjectId): Promise<BoardArticle> {// asyc bulgani uchun Promisda BoardArticle qaytaradi
+        //(memberId: ObjectId, articleId: ObjectId) ObJECT ID tipe bilan belgilangan
+        const search: T = {// searching Objectni hosil qilyapmiz
             _id: articleId,
             articleStatus: BoardArticleStatus.ACTIVE,
-        };
+        };//faqat aktiv articlarni kura oladi foydalanuvchilar
+
 
         const targetBoardArticle: BoardArticle = await this.boardArticleModel.findOne(search).lean().exec();
+        // bu yerda targetBoardArticle Search qilyapmiz va LEAN biriktiryapmiz sababi targetBoardArticle modify qila olishimiz kerak
         if (!targetBoardArticle) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 
-        if (memberId) {
+        if (memberId) {// agar Authunteket bulgan memberbulsa shu mantiqni ishga tushuradi
             const viewInput = { memberId: memberId, viewRefId: articleId, viewGroup: ViewGroup.ARTICLE };
             const newView = await this.viewService.recordView(viewInput);
             if (newView) {
@@ -63,33 +70,34 @@ export class BoardArticleService {
     }
 
     public async updateBoardArticle(memberId: ObjectId, input: BoardArticleUpdate): Promise<BoardArticle> {
-        const { _id, articleStatus } = input;
+        const { _id, articleStatus } = input;//Distraction qilyapmiz 
 
         const result = await this.boardArticleModel
             .findOneAndUpdate({ _id: _id, memberId: memberId, articleStatus: BoardArticleStatus.ACTIVE }, input, {
+                //.findOneAndUpdate chaqiryapmiz hamda 3 ta argumentni pas qilyapmiz
                 new: true,
             })
             .exec();
 
-        if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
+        if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);//update bulmagan bulsa ishlaydi
 
-        if (articleStatus === BoardArticleStatus.DELETE) {
-            await this.memberService.memberStatsEditor({
+        if (articleStatus === BoardArticleStatus.DELETE) {//agar biz uchiradigan bulsak 
+            await this.memberService.memberStatsEditor({//memberservis modulini intensidan memberStatsEditor ni cahqiri olyapmiz
                 _id: memberId,
                 targetKey: 'memberArticles',
                 modifier: -1,
             });
         }
-
+//FAQAT UZIMIZNIKINI UZGARTIRA OLAMIZ USER BULSAK
         return result;
     }
 
     public async getBoardArticles(memberId: ObjectId, input: BoardArticlesInquiry): Promise<BoardArticles> {
-  const { articleCategory, text } = input.search;
-  const match: T = { articleStatus: BoardArticleStatus.ACTIVE };
-  const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };
+  const { articleCategory, text } = input.search;// buyerrda Distraction qilyapmiz
+  const match: T = { articleStatus: BoardArticleStatus.ACTIVE };// match qilyapmiz article statusi ACTIVE bulganlarni
+  const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };// standart sortimizni hosil qilyapmiz
 
-  if (articleCategory) match.articleCategory = articleCategory;
+  if (articleCategory) match.articleCategory = articleCategory;//articleCategory talab etilgan bulsa kiritamiz buni destraction dan oldik
   if (text) match.articleTitle = { $regex: new RegExp(text, 'i') };
   if (input.search?.memberId) {
     match.memberId = shapeIntoMongoObjectId(input.search.memberId);
@@ -98,25 +106,25 @@ export class BoardArticleService {
   console.log('match:', match);
 
   const result = await this.boardArticleModel
-    .aggregate([
+    .aggregate([// static methtini ishga tushuryapmizz
       { $match: match },
       { $sort: sort },
       {
-        $facet: {
-          list: [
+        $facet: {// match va sortlarni biriktiri fasedan foydalanyapmiz
+          list: [//yangi agrigation
             { $skip: (input.page - 1) * input.limit },
             { $limit: input.limit },
             // meLiked
             lookupMember,
             { $unwind: '$memberData' },
           ],
-          metaCounter: [{ $count: 'total' }],
+          metaCounter: [{ $count: 'total' }],//meta counter nomli agrigation
         },
       },
     ])
     .exec();
 
-  if (!result.length) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
+  if (!result.length) throw new InternalServerErrorException(Message.NO_DATA_FOUND); //agar data kelmasa bu hatolikni beradi
 
   return result[0];
 }

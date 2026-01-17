@@ -34,7 +34,7 @@ export class PropertyService {
             });
             return result;
         } catch (err) {
-            console.log('Error, Service.model:', err.message);
+            console.log('Error, Service.model:', err.message);//skima validationligi uchun qilyapman
             throw new BadRequestException(Message.CREATE_FAILED);
         }
     }
@@ -53,7 +53,7 @@ export class PropertyService {
             const newView = await this.viewService.recordView(viewInput);
             if (newView) {
                 await this.propertyStatsEditor({ _id: propertyId, targetKey: 'propertyViews', modifier: 1 });
-                targetProperty.propertyViews++;
+                targetProperty.propertyViews++;//
             }
         }
 

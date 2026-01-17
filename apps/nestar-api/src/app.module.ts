@@ -16,7 +16,7 @@ import { T } from './libs/types/common';
      ConfigModule.forRoot(), // XAvsizligini taminlash maqsadida .env bilan ishlatish
      GraphQLModule.forRoot({
       driver: ApolloDriver,//Apollo Server dan foydalanishni bildiradi
-      playground: true,//Bu - query va mutation larni test qilish uchun interaktiv interfeys
+      playground: true,
       uploads: false,//Fayl yuklash funksiyasini o'chiradi
       autoSchemaFile: true,
       formatError: (error: T) => {
@@ -33,6 +33,6 @@ import { T } from './libs/types/common';
       DatabaseModule,// TCP conection 
   ],
   controllers: [AppController],  // Bu yerda faqat ishlab turibdi degan mantiqni beradi
-  providers: [AppService, AppResolver],
+  providers: [AppService, AppResolver],//Business logic va GraphQL resolverlar Dependency Injection orqali inject qilinadi
 })
 export class AppModule {}

@@ -6,7 +6,7 @@ import { Direction } from '../../enums/common.enum';
 import { availableBoardArticleSorts } from '../../config';
 
 @InputType()
-export class BoardArticleInput {
+export class BoardArticleInput {// bord artikle larimizni hosil qilshimiz uchun
 	@IsNotEmpty()
 	@Field(() => BoardArticleCategory)
 	articleCategory: BoardArticleCategory;
@@ -44,7 +44,7 @@ class BAISearch {
 }
 
 @InputType()
-export class BoardArticlesInquiry {
+export class BoardArticlesInquiry { //Board artiklelarni Queriy qilishimiz uchun
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)
@@ -81,7 +81,7 @@ class ABAISearch {
 }
 
 @InputType()
-export class AllBoardArticlesInquiry {
+export class AllBoardArticlesInquiry {// ADminga hizmat qiladigan
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)

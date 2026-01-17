@@ -15,28 +15,31 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Resolver()
 export class BoardArticleResolver {
-    constructor(private readonly boardArticleService: BoardArticleService) { }
+    constructor(private readonly boardArticleService: BoardArticleService) { }//dipendensi injection qildik
 
 
-    @UseGuards(AuthGuard)
-    @Mutation(() => BoardArticle)
-    public async createBoardArticle(
-        @Args('input') input: BoardArticleInput,
-        @AuthMember('_id') memberId: ObjectId,
+    @UseGuards(AuthGuard)// FAQAT AUTHENTICATE BULGAN. MEMBERLA  FOYDALANA OLADI
+    @Mutation(() => BoardArticle)// BU MUTETION GRAPQL API BUNDAN FOYDALANIB YANGI ARTIKLE HOSIL QILAMIZ
+    public async createBoardArticle(// NOMI ARTIKLIMIZNIZ 
+        @Args('input') input: BoardArticleInput,// FRONTENTIMIZDA INPUTNI QABUL QILYAPTI, INPUTIMIZNI TIPINI BOARD ARTICLE INPUDA BERAMIZ
+        @AuthMember('_id') memberId: ObjectId,//MEMBERIMIZNI ID SINI QABUL QILYAPMIZ
     ): Promise<BoardArticle> {
         console.log('Mutation: createBoardArticle');
-        return await this.boardArticleService.createBoardArticle(memberId, input);
+        return await this.boardArticleService.createBoardArticle(memberId, input);//objecr argument paz
+        //BOARD ARTICLE MODULINI INTENSINI HOSILQILDIK UNI CREATE BORD ARTICLE MATTHITI CHAQIRIB (.  ) ARGUMENT SIFARTIDA PAHQ QILDIK
     }
 
-    @UseGuards(WithoutGuard)
-    @Query(() => BoardArticle)
-    public async getBoardArticle(
-        @Args('articleId') input: string,
-        @AuthMember('_id') memberId: ObjectId,
+    @UseGuards(WithoutGuard)// HAMMA buni ishlatsa buladi
+    @Query(() => BoardArticle)//BoardArticle DTO bilan qiymat qaytaradi
+    public async getBoardArticle(// nomi ostida api hosil qilganmiz
+        @Args('articleId') input: string, //Frontebtdan  articleId orqali string valyu keladi
+        @AuthMember('_id') memberId: ObjectId,// agar authintecate bulgan member bulsa Object ID ni olib beradi
+        // authintecate bulmagan bulsa NULL qaytaradi
     ): Promise<BoardArticle> {
         console.log('Query: getProperty');
-        const articleId = shapeIntoMongoObjectId(input);
+        const articleId = shapeIntoMongoObjectId(input);// MONGO aricle ID ga aylantirib oldik
         return await this.boardArticleService.getBoardArticle(memberId, articleId);
+        //boardArticleService object  getBoardArticle degan methitini chaqiryapmiz  hamda (. ) path qilyapmiz
     }
 
 
@@ -52,7 +55,7 @@ export class BoardArticleResolver {
     }
 
 
-    @UseGuards(WithoutGuard)
+    @UseGuards(WithoutGuard)//bundan hamma foydalana oladi
     @Query(() => BoardArticles)
     public async getBoardArticles(
         @Args('input') input: BoardArticlesInquiry,
@@ -66,9 +69,9 @@ export class BoardArticleResolver {
     /** ADMIN  */
     @Roles(MemberType.ADMIN)
     @UseGuards(RolesGuard)
-    @Query(() => BoardArticles)
+    @Query(() => BoardArticles)// QUERIY GrafQL api
     public async getAllBoardArticlesByAdmin(
-        @Args('input') input: AllBoardArticlesInquiry,
+        @Args('input') input: AllBoardArticlesInquiry,//clintimizni Admin pageda input nomli malumot talab etiladi
         @AuthMember('_id') memberId: ObjectId,
     ): Promise<BoardArticles> {
         console.log('Query: getAllBoardArticlesByAdmin');

@@ -10,11 +10,11 @@ async function bootstrap() {   //bootstrap function bu defin qismi
   //va natijani kutib constanta Appga tenglaymiz
   // constanta App bu EXpress + NestJS = qorishmasi
   app.useGlobalPipes(new ValidationPipe());// NOTUG"RI malumotlarni filtrlash vazifaasinin bajaradi kelentda kelgan malumotni API ga kirishdan oldin tekshirdi
-  app.useGlobalInterceptors(new LoggingInterceptor());
-  app.enableCors({origin: true, credentials: true });
+  app.useGlobalInterceptors(new LoggingInterceptor());//GraphQL query/mutation'ni log qilish uchun:
+  app.enableCors({origin: true, credentials: true });// 
 
   app.use(graphqlUploadExpress({ maxFileSize: 15000000, maxFiles: 10 }));
-  app.use('/uploads', express.static('./uploads'));
+  app.use('/uploads', express.static('./uploads'));//
   await app.listen(process.env.PORT_API ?? 3000);//bu EXPRESS ni METH-ti
 }
 bootstrap(); //bootstrap function bu call qismi

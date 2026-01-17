@@ -16,28 +16,28 @@ import { PropertyUpdate } from '../../libs/dto/property/property.update'
 
 @Resolver()
 export class PropertyResolver {
-    constructor(private readonly propertyService: PropertyService) { }
+    constructor(private readonly propertyService: PropertyService) { }//object
 
     @Roles(MemberType.AGENT)
     @UseGuards(RolesGuard)
     @Mutation(() => Property)
-    public async createProperty(
+    public async createProperty(// 2ta parametiri bor
         @Args("input") input: PropertyInput,
         @AuthMember("_id") memberId: ObjectId,)
         : Promise<Property> {
         console.log('Mutation: createProperty');
         input.memberId = memberId;
-    return await this.propertyService.createProperty(input);
+    return await this.propertyService.createProperty(input);//argument sifatida path qilyapmiz
     
     }
-    @UseGuards(WithoutGuard)
+    @UseGuards(WithoutGuard)// hamma foydalana oladi
 @Query((returns) => Property)
 public async getProperty(
   @Args('propertyId') input: string,
   @AuthMember('_id') memberId: ObjectId,
 ): Promise<Property> {
   console.log('Query: getProperty');
-  const propertyId = shapeIntoMongoObjectId(input);
+  const propertyId = shapeIntoMongoObjectId(input);//mongo db ga mos object formatiga uzgartirib oldik
   return await this.propertyService.getProperty(memberId, propertyId);
 }
 

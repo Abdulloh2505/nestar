@@ -61,11 +61,11 @@ public async createComment(memberId: ObjectId, input: CommentInput): Promise<Com
 }
 
 public async updateComment(memberId: ObjectId, input: CommentUpdate): Promise<Comment> {
-  const { _id } = input;
+  const { _id } = input;//distraction
   const result = await this.commentModel.findOneAndUpdate(
     {
-      _id: _id,
-      memberId: memberId,
+      _id: _id,//commentni ID
+      memberId: memberId,//Memberni ID
       commentStatus: CommentStatus.ACTIVE,
     },
     input,

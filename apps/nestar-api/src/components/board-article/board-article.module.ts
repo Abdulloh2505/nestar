@@ -15,9 +15,9 @@ import { ViewModule } from '../view/view.module';
     schema: BoardArticleSchema,
   },
 ]),
-   AuthModule,
-   MemberModule,
-   ViewModule,
+   AuthModule,// AUTHEZETION VA  AUTHENTICATION MODULARNI JAROYONINI TASHKILAB BERADIGAN
+   MemberModule,//MEBERSERVISE MODULIINING STATISTIKANI UPDATE QILISHGA ISHLATAMIZ
+   ViewModule,//
 
   ],
   providers: [BoardArticleResolver, BoardArticleService],
@@ -25,3 +25,4 @@ import { ViewModule } from '../view/view.module';
 })
 
 export class BoardArticleModule {}
+// ESXT JS XOLDERLARNI KEBAB KES BILAN BELGILAYDI

@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { BoardArticleStatus } from '../../enums/board-article.enum';
 import { ObjectId } from 'mongoose';
-
+// UPDAT QILISHIMIZ UCHUN
 @InputType()
 export class BoardArticleUpdate {
 	@IsNotEmpty()
