@@ -136,3 +136,18 @@ function countNumberAndLetters(str: string): { number: number; letter: number } 
 console.log(countNumberAndLetters("string152%¥"));
 console.log(countNumberAndLetters("Hello123World456!"));
 console.log(countNumberAndLetters("Test2024@#$"));
+
+function singleNumber(nums: number[]): number {
+    let result: number = 0;
+
+    for (const num of nums) {
+        result ^= num;
+    }
+
+    return result;
+}
+
+// 
+console.log(singleNumber([4, 2, 1, 2, 1])); 
+console.log(singleNumber([2, 2, 1]));     
+
