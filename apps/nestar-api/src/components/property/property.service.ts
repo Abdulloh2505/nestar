@@ -23,6 +23,7 @@ import { LikeGroup } from '../../libs/enums/like.enum';
 export class PropertyService {
   constructor(
     @InjectModel('Property') private readonly propertyModel: Model<Property>,
+    
     private memberService: MemberService,
     private viewService: ViewService,
     private likeService: LikeService,
