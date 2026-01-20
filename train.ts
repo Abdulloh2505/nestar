@@ -137,6 +137,17 @@ console.log(countNumberAndLetters("string152%¥"));
 console.log(countNumberAndLetters("Hello123World456!"));
 console.log(countNumberAndLetters("Test2024@#$"));
 
+
+
+
+
+
+
+//task zs
+
+
+
+
 function singleNumber(nums: number[]): number {
     let result: number = 0;
 
