@@ -16,7 +16,7 @@ export class LikeService {
      let modifier = 1;
 
      if(exist) {
-       await this.likeModel.findByIdAndDelete(search).exec();
+      await this.likeModel.findOneAndDelete(search).exec();
        modifier = -1;
 
      } else{
