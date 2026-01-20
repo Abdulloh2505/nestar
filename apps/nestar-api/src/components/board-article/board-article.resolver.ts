@@ -16,7 +16,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 @Resolver()
 export class BoardArticleResolver {
     constructor(private readonly boardArticleService: BoardArticleService) { }//dipendensi injection qildik
-
+    
 
     @UseGuards(AuthGuard)// FAQAT AUTHENTICATE BULGAN. MEMBERLA  FOYDALANA OLADI
     @Mutation(() => BoardArticle)// BU MUTETION GRAPQL API BUNDAN FOYDALANIB YANGI ARTIKLE HOSIL QILAMIZ
@@ -64,6 +64,18 @@ export class BoardArticleResolver {
         console.log('Query: getBoardArticles');
         return await this.boardArticleService.getBoardArticles(memberId, input);
     }
+
+      @UseGuards(AuthGuard)
+        @Mutation(() => BoardArticle)
+        public async likeTargetBoardArticle
+        (@Args("articleId")  
+        input: string, @AuthMember('_id') memberId: ObjectId):
+         Promise<BoardArticle> {
+          console.log("Mutation: likeTargetBoardArticle");
+          const likeRefId = shapeIntoMongoObjectId(input);
+          return await this.boardArticleService.likeTargetMember(memberId, likeRefId)
+         
+        }
 
 
     /** ADMIN  */
