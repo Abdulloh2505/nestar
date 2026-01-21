@@ -115,50 +115,72 @@
 
 
 //TASK-ZR
-function countNumberAndLetters(str: string): { number: number; letter: number } {
-  let numberCount = 0;
-  let letterCount = 0;
+// function countNumberAndLetters(str: string): { number: number; letter: number } {
+//   let numberCount = 0;
+//   let letterCount = 0;
 
-  for (let i = 0; i < str.length; i++) {
-    const char = str[i];
+//   for (let i = 0; i < str.length; i++) {
+//     const char = str[i];
     
-    if (char >= '0' && char <= '9') {
-      numberCount++;
-    }
-    else if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
-      letterCount++;
-    }
-  }
+//     if (char >= '0' && char <= '9') {
+//       numberCount++;
+//     }
+//     else if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
+//       letterCount++;
+//     }
+//   }
 
-  return { number: numberCount, letter: letterCount };
+//   return { number: numberCount, letter: letterCount };
+// }
+
+// console.log(countNumberAndLetters("string152%¥"));
+// console.log(countNumberAndLetters("Hello123World456!"));
+// console.log(countNumberAndLetters("Test2024@#$"));
+
+
+
+
+
+
+
+// //task zs
+
+
+
+
+// function singleNumber(nums: number[]): number {
+//     let result: number = 0;
+
+//     for (const num of nums) {
+//         result ^= num;
+//     }
+
+//     return result;
+// }
+
+// // 
+// console.log(singleNumber([4, 2, 1, 2, 1])); 
+// console.log(singleNumber([2, 2, 1]));     
+
+//TASk-ZT
+function firstUniqueCharIndex(str: string): number {
+    const charCount: Record<string, number> = {};
+
+    for (const char of str) {
+        charCount[char] = (charCount[char] || 0) + 1;
+    }
+
+    for (let i = 0; i < str.length; i++) {
+        if (charCount[str[i]] === 1) {
+            return i;
+        }
+    }
+
+    return -1; 
 }
 
-console.log(countNumberAndLetters("string152%¥"));
-console.log(countNumberAndLetters("Hello123World456!"));
-console.log(countNumberAndLetters("Test2024@#$"));
-
-
-
-
-
-
-
-//task zs
-
-
-
-
-function singleNumber(nums: number[]): number {
-    let result: number = 0;
-
-    for (const num of nums) {
-        result ^= num;
-    }
-
-    return result;
-}
-
-// 
-console.log(singleNumber([4, 2, 1, 2, 1])); 
-console.log(singleNumber([2, 2, 1]));     
-
+// Misol uchun
+console.log(firstUniqueCharIndex("stamp")); // 0
+console.log(firstUniqueCharIndex("AASSAAB"))//6
+console.log(firstUniqueCharIndex("BBOOT"))//4
+console.log(firstUniqueCharIndex("ZZO'R"))//2
