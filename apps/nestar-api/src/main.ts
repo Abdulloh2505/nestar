@@ -18,7 +18,7 @@ async function bootstrap() {   //bootstrap function bu defin qismi
   app.use('/uploads', express.static('./uploads'));//
 
   app.useWebSocketAdapter(new WsAdapter(app));
-  
+
   await app.listen(process.env.PORT_API ?? 3000);//bu EXPRESS ni METH-ti
 }
 bootstrap(); //bootstrap function bu call qismi
@@ -31,3 +31,11 @@ bootstrap(); //bootstrap function bu call qismi
  DTO
  */
   
+ 
+ 
+ 
+ /**   RUN qilish mantiqlari
+  npm run start:dev
+   npm run start:dev:batch
+  
+  */
