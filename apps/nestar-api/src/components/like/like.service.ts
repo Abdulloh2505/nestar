@@ -47,22 +47,22 @@ public async checkLikeExistence(input: LikeInput): Promise<MeLiked[]>{
 
 
 public async getFavoriteProperties(memberId: ObjectId, input: OrdinaryInquiry): Promise<Properties> {
-  const { page, limit } = input;
+  const { page, limit } = input;// distraction
   const match: T = { likeGroup: LikeGroup.PROPERTY, memberId: memberId };
 
   const data: T = await this.likeModel
     .aggregate([
       { $match: match },
-      { $sort: { updatedAt: -1 } },
+      { $sort: { updatedAt: -1 } },//[Like1, Like 2 ]
       {
         $lookup: {
           from: 'properties',
-          localField: 'likeRefId',
-          foreignField: '_id',
+          localField: 'likeRefId',//Like chidagi Referense Id 
+          foreignField: '_id',// propertiys Id 
           as: 'favoriteProperty',
         },
-      },
-      { $unwind: '$favoriteProperty' },
+      },          
+      { $unwind: '$favoriteProperty' },// Arway holatidan chiqarib olyapmiz
       {
         $facet: {
           list: [

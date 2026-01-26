@@ -33,28 +33,28 @@ export const shapeIntoMongoObjectId = (target: any) => {
   return typeof target === "string" ? new ObjectId(target) : target;
 };
 
-export const lookupAuthMemberLiked = (memberId: T, targetRefId: string = '$_id') => {
-  return {
-    $lookup: {
-      from: 'likes',
+export const lookupAuthMemberLiked = (memberId: T, targetRefId: string = '$_id'/**PROPERTYMIZ IDsi */) => {
+  return {// bu bacendni ichida ishga tushmayapti Data baseda ishga tushyapti
+    $lookup: {// BUNI BIZ KOMPLEX QUERY DEB ATADIK 2 TA DATA SETNI SOLISHTIRADI VA MATCHBULADIGAN BULSA BERADI MALUMOTNI
+      from: 'likes',// colection ichida
       let: {
-        localLikeRefId: targetRefId,
-        localMemberId: memberId,
-        localMyFavorite: true,
+        localLikeRefId: targetRefId,// Propertiy Id siga teg buladi. || Agent ID   || Jone follow qilgan odamlarni Id si
+        localMemberId: memberId,// murojat qilayotgam memberrimiz Id si Daniyel 
+        localMyFavorite: true,// test. qilish uchun
       },
       pipeline: [
         {
           $match: {
-            $expr: {
+            $expr: {// agar birdan ortiq malumot bulganda EXPr ishlatilaer ekan
               $and: [
-                { $eq: ['$likeRefId', '$$localLikeRefId'] },
-                { $eq: ['$memberId', '$$localMemberId'] }
-              ],
+                { $eq: ['$likeRefId', '$$localLikeRefId'] },//Like reef Idni Propertiymiz Id siga tenglashtiryapdi
+                { $eq: ['$memberId', '$$localMemberId'] }//Memberimizni Id si colectiondagi MemnerId bilan tekshiryapdi
+              ],// $$ bitasi dabasniki  2kinchisi localVeriblni olib kilishi uchun
             },
           },
         },
         {
-          $project: {
+          $project: {// bu kelgan malumotni manashunday shakilda chiqar
             _id: 0,
             memberId: 1,
             likeRefId: 1,
@@ -62,7 +62,7 @@ export const lookupAuthMemberLiked = (memberId: T, targetRefId: string = '$_id')
           },
         },
       ],
-      as: 'meLiked',
+      as: 'meLiked',//ohiri shun chanarsan ni bita qilib beryapti
     },
   };
 };
@@ -73,12 +73,12 @@ interface lookupAuthMemberFollowed {
 }
 export const lookupAuthMemberFollowed = (input: lookupAuthMemberFollowed) => {
   const { followerId, followingId } = input;
-  return {
+  return {// BUNI BIZ KOMPLEX QUERY DEB ATADIK 2 TA DATA SETNI SOLISHTIRADI VA MATCHBULADIGAN BULSA BERADI MALUMOTNI
     $lookup: {
       from: 'follows',
       let: {
-        localFollowerId: followerId,
-        localFollowingId: followingId,
+        localFollowerId: followerId,// bu Daniyel
+        localFollowingId: followingId,// BU Jonga follow bulganlar yani [ justin .leo, ali]
         localMyFavorite: true,
       },
       pipeline: [
@@ -109,10 +109,10 @@ export const lookupAuthMemberFollowed = (input: lookupAuthMemberFollowed) => {
 
 export const lookupMember = {
   $lookup: {
-    from: 'members',
-    localField: 'memberId',
-    foreignField: '_id',
-    as: 'memberData',
+    from: 'members',//members kolectiondan qidiradi
+    localField: 'memberId',//propertiy. member id
+    foreignField: '_id',//
+    as: 'memberData',//member data kurinishida qaytar
   },
 };
 
@@ -136,10 +136,10 @@ export const lookupFollowerData = {
 
 export const lookupFavorite = {
   $lookup: {
-    from: 'members',
+    from: 'members',//colectionda izla
     localField: 'favoriteProperty.mebemrId',
-    foreignField: '_id',
-    as: 'favoriteProperty.memberData',
+    foreignField: '_id',//members ._id
+    as: 'favoriteProperty.memberData',// like ichidagi favoruteProperty+memberData
   },
 };
 

@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { LoggingInterceptor } from './libs/interceptor/Logging.interceptor';
 import { graphqlUploadExpress } from "graphql-upload";
 import * as express from 'express';
+import { WsAdapter } from '@nestjs/platform-ws';
 
 async function bootstrap() {   //bootstrap function bu defin qismi
   const app = await NestFactory.create(AppModule); //boostrap ishga tushganda payti NestFactoriyni create degan methhoti chaqiryapmiz va  Appmodulni argument sifatida path qilyapmiz
@@ -15,6 +16,9 @@ async function bootstrap() {   //bootstrap function bu defin qismi
 
   app.use(graphqlUploadExpress({ maxFileSize: 15000000, maxFiles: 10 }));
   app.use('/uploads', express.static('./uploads'));//
+
+  app.useWebSocketAdapter(new WsAdapter(app));
+  
   await app.listen(process.env.PORT_API ?? 3000);//bu EXPRESS ni METH-ti
 }
 bootstrap(); //bootstrap function bu call qismi

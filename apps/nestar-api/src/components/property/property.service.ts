@@ -112,26 +112,27 @@ export class PropertyService {
   }
   public async getProperties(memberId: ObjectId, input: PropertiesInquiry): Promise<Properties> {
     const match: T = { propertyStatus: PropertyStatus.ACTIVE };
-    const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };
+    const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };//dinamic kiy
 
-    this.shapeMatchQuery(match, input);
+    this.shapeMatchQuery(match, input);//
     console.log('match:', match);
 
     const result = await this.propertyModel
       .aggregate([
-        { $match: match },
-        { $sort: sort },
+        { $match: match },// tepadagi ga uxshaganlarni sartirofka qiladi
+        { $sort: sort },// sortga uxshaganlarni sartirofka qiladi
         {
           $facet: {
-            list: [
+            list: [//1 pipline hosil qilyapmiz
               { $skip: (input.page - 1) * input.limit },
-              { $limit: input.limit },
+              { $limit: input.limit },//[propertiylarimiz yetib keldi ]
               lookupAuthMemberLiked(memberId),
 
               lookupMember,
-              { $unwind: '$memberData' },
+              { $unwind: '$memberData' },//[ ] da kelgan meber datamiznin object kurinishiga aylantiryapmiz
             ],
-            metaCounter: [{ $count: 'total' }],
+            // 
+            metaCounter: [{ $count: 'total' }],// 2 
           },
         },
       ])
@@ -153,24 +154,24 @@ export class PropertyService {
       squaresRange,
       options,
       text,
-    } = input.search;
+    } = input.search;//distraction
 
     if (memberId) match.memberId = shapeIntoMongoObjectId(memberId);
     if (locationList) match.propertyLocation = { $in: locationList };
-    if (roomsList) match.propertyRooms = { $in: roomsList };
+    if (roomsList) match.propertyRooms = { $in: roomsList };// malumot Arayda keladi
     if (bedsList) match.propertyBeds = { $in: bedsList };
     if (typeList) match.propertyType = { $in: typeList };
 
-    if (pricesRange) match.propertyPrice = { $gte: pricesRange.start, $lte: pricesRange.end };
-    if (periodsRange) match.createdAt = { $gte: periodsRange.start, $lte: periodsRange.end };
-    if (squaresRange) match.propertySquare = { $gte: squaresRange.start, $lte: squaresRange.end };
+    if (pricesRange) match.propertyPrice = { $gte: pricesRange.start, $lte: pricesRange.end };// manashu narxdan shu narxgacha olib. ber
+    if (periodsRange) match.createdAt = { $gte: periodsRange.start, $lte: periodsRange.end };//qushilgan vaqti
+    if (squaresRange) match.propertySquare = { $gte: squaresRange.start, $lte: squaresRange.end };// qancha kvadratligi
 
     if (text) match.propertyTitle = { $regex: new RegExp(text, 'i') };
     if (options) {
       match['$or'] = options.map((ele) => {
         return { [ele]: true };
       });
-    }
+    }// barter truee yoki reent truue
   }
 
   public async getFavorites(memberId: ObjectId, input: OrdinaryInquiry): Promise<Properties>{

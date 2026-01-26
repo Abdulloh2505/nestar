@@ -16,7 +16,7 @@ export class FollowService {
 ){}
 
 public async subscribe(followerId: ObjectId, followingId: ObjectId): Promise<Follower> {
-  if (followerId.toString() === followingId.toString()) {
+  if (followerId.toString() === followingId.toString()) {// object ID bulgani uchun stringa utkazdik                        
     throw new InternalServerErrorException(Message.SELF_SUBSCRIPTION_DENIED);
   }
 
@@ -86,6 +86,8 @@ public async getMemberFollowings(
 
   const match: T = { followerId: search?.followerId };
   console.log('match:', match);
+  // followertId => JONE
+  // memberId => Daniyel
 
   const result = await this.followModel
     .aggregate([
@@ -95,12 +97,14 @@ public async getMemberFollowings(
         $facet: {
           list: [
             { $skip: (page - 1) * limit },
-            { $limit: limit },
-            lookupAuthMemberLiked(memberId, "$followingId"),
+            { $limit: limit },// Follow malumotlai keladi  BU JONE follov bulganlar
+            lookupAuthMemberLiked(memberId, "$followingId"),// Jone ni foloving qilganlari
+
+
            lookupAuthMemberFollowed({ followerId: memberId, followingId: '$followingId'}),
             lookupFollowingData,
             { $unwind: '$followingData' },
-          ],
+          ],              
           metaCounter: [{ $count: 'total' }],
         },
       },
