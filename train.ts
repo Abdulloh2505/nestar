@@ -163,24 +163,48 @@
 // console.log(singleNumber([2, 2, 1]));     
 
 //TASk-ZT
-function firstUniqueCharIndex(str: string): number {
-    const charCount: Record<string, number> = {};
+// function firstUniqueCharIndex(str: string): number {
+//     const charCount: Record<string, number> = {};
 
-    for (const char of str) {
-        charCount[char] = (charCount[char] || 0) + 1;
+//     for (const char of str) {
+//         charCount[char] = (charCount[char] || 0) + 1;
+//     }
+
+//     for (let i = 0; i < str.length; i++) {
+//         if (charCount[str[i]] === 1) {
+//             return i;
+//         }
+//     }
+
+//     return -1; 
+// }
+
+// // Misol uchun
+// console.log(firstUniqueCharIndex("stamp")); // 0
+// console.log(firstUniqueCharIndex("AASSAAB"))//6
+// console.log(firstUniqueCharIndex("BBOOT"))//4
+// console.log(firstUniqueCharIndex("ZZO'R"))//2
+
+
+function sumOfUnique(arr: number[]): number {
+  const countMap = new Map<number, number>();
+
+  for (const num of arr) {
+    countMap.set(num, (countMap.get(num) || 0) + 1);
+  }
+
+  let sum = 0;
+
+  for (const [num, count] of countMap) {
+    if (count === 1) {
+      sum += num;
     }
+  }
 
-    for (let i = 0; i < str.length; i++) {
-        if (charCount[str[i]] === 1) {
-            return i;
-        }
-    }
-
-    return -1; 
+  return sum;
 }
-
-// Misol uchun
-console.log(firstUniqueCharIndex("stamp")); // 0
-console.log(firstUniqueCharIndex("AASSAAB"))//6
-console.log(firstUniqueCharIndex("BBOOT"))//4
-console.log(firstUniqueCharIndex("ZZO'R"))//2
+// tekshirish
+console.log(sumOfUnique([1, 2, 3, 2])); // 4
+console.log(sumOfUnique([5, 5, 5]));    // 0
+console.log(sumOfUnique([1, 2, 3, 4])); // 10
+console.log(sumOfUnique([1, 2, 3, 4, 2, 5, 3])); // 10
