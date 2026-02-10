@@ -157,10 +157,10 @@ export class PropertyService {
     } = input.search;//distraction
 
     if (memberId) match.memberId = shapeIntoMongoObjectId(memberId);
-    if (locationList) match.propertyLocation = { $in: locationList };
-    if (roomsList) match.propertyRooms = { $in: roomsList };// malumot Arayda keladi
-    if (bedsList) match.propertyBeds = { $in: bedsList };
-    if (typeList) match.propertyType = { $in: typeList };
+    if (locationList && locationList.length) match.propertyLocation = { $in: locationList };
+    if (roomsList && roomsList.length) match.propertyRooms = { $in: roomsList };// malumot Arayda keladi
+    if (bedsList && bedsList .length) match.propertyBeds = { $in: bedsList };
+    if (typeList && typeList.length) match.propertyType = { $in: typeList };
 
     if (pricesRange) match.propertyPrice = { $gte: pricesRange.start, $lte: pricesRange.end };// manashu narxdan shu narxgacha olib. ber
     if (periodsRange) match.createdAt = { $gte: periodsRange.start, $lte: periodsRange.end };//qushilgan vaqti
